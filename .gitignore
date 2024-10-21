@@ -1,0 +1,33 @@
+# Identifies files to be ignored by Git.
+# Also used by fd|fdfind  to identify directories and files to ignore
+
+# internal development notes
+pel_doc.org
+
+# Temporary holding directories
+tmp/*
+old/*
+
+
+# Byte-Compiled Emacs Lisp files
+*.elc
+
+# Emacs Backup files
+*~
+
+# Emacs temporary files
+.#*
+*#
+\#*
+
+# Emacs desktop file
+.emacs.desktop
+
+# Emacs emacro directory
+.emacros
+
+
+# macOS fork files
+.DS_Store
+
+# -----------------------------------------------------------------------------
