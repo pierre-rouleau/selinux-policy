@@ -19,8 +19,7 @@
 (defvar selinuxpolicy-mode-syntax-table nil
   "Syntax table for use in SELinuxPolicy-mode buffers.")
 
-(if selinuxpolicy-mode-syntax-table
-    ()
+(unless selinuxpolicy-mode-syntax-table
   (setq selinuxpolicy-mode-syntax-table (make-syntax-table))
   (modify-syntax-entry ?#  "<"   selinuxpolicy-mode-syntax-table)
   (modify-syntax-entry ?\n ">"   selinuxpolicy-mode-syntax-table)
@@ -43,7 +42,6 @@
   :syntax-table selinuxpolicy-mode-syntax-table
   (setq-local font-lock-defaults selinuxpolicy-font-lock-defaults)
 
-
   (setq-local comment-start "#")
   (setq-local comment-start-skip "#")
   (setq-local comment-end ""))
@@ -59,24 +57,40 @@
     ))
 
 (defconst selinuxpolicy-font-lock-keywords '(
-   "\\<type\\>"
+   ;; User Statements
+   "\\<user\\>"
+   ;; Role Statements
+   "\\<role\\>"
+   "\\<attribute_role\\>"
+   "\\<roleattribute\\>"
    "\\<allow\\>"
+   "\\<role_transition\\>"
+   "\\<dominance\\>" ; deprecated
+   ;; Type Statements
+   "\\<type\\>"
+   "\\<attribute\\>"
+   "\\<expandattribute\\>"
+   "\\typeattribute\\>"
+   "\\typealias\\>"
+   "\\permissive\\>"
+   "\\<type_transition\\>"
+   "\\<type_change\\>"
+   "\\<type_member\\>"
+   ;; Bound Rules
+   "\\typebounds\\>"
+   ;; Access Vector Rules
+   ;; "\\<allow\\>"
+   "\\<dontaudit\\>"
+   "\\<auditallow\\>"
+   "\\<neverallow\\>"
+
    "\\<types\\>"
    "\\<self\\>"
-   "\\<type_transition\\>"
-   "\\<role_transition\\>"
-   "\\<type_change\\>"
    "\\<alias\\>"
-   "\\<role\\>"
    "\\<roles\\>"
    "\\<common\\>"
    "\\<inherits\\>"
    "\\<class\\>"
-   "\\<user\\>"
-   "\\<attribute\\>"
-   "\\<auditallow\\>"
-   "\\<dontaudit\\>"
-   "\\<dominance\\>"
    "\\<constrain\\>"
    "\\<dom\\>"
    "\\<domby\\>"
@@ -102,9 +116,8 @@
    ("\\<\\w+?_t\\>" 0 font-lock-type-face keep t)
    ("\\<\\w+?_u\\>" 0 font-lock-constant-face keep t)
    ("\\<\\w+?_r\\>" 0 font-lock-builtin-face keep t)
-   ("\\<\\(\\w+?\\)\\>\\s-*(" 1 font-lock-warning-face keep t)
-   ("\\s." 0 font-lock-string-face keep t)
-   )
+   ;; ("\\<\\(\\w+?\\)\\>\\s-*(" 1 font-lock-warning-face keep t)
+   ("\\s." 0 font-lock-string-face keep t))
   "Fontification for SELinux TE-RBAC policy code.")
 
 (add-to-list 'auto-mode-alist '("\\.te\\'" . selinuxpolicy-mode))
