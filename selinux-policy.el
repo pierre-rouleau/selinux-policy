@@ -22,38 +22,31 @@
 (if selinuxpolicy-mode-syntax-table
     ()
   (setq selinuxpolicy-mode-syntax-table (make-syntax-table))
-  (modify-syntax-entry ?# "<"   selinuxpolicy-mode-syntax-table)
-  (modify-syntax-entry ?\n ">"  selinuxpolicy-mode-syntax-table)
-  (modify-syntax-entry ?{ "(}"  selinuxpolicy-mode-syntax-table)
-  (modify-syntax-entry ?} "){"  selinuxpolicy-mode-syntax-table)
-  (modify-syntax-entry ?( "()"  selinuxpolicy-mode-syntax-table)
-  (modify-syntax-entry ?) ")("  selinuxpolicy-mode-syntax-table)
-  (modify-syntax-entry ?\; "."  selinuxpolicy-mode-syntax-table)
-  (modify-syntax-entry ?, "."   selinuxpolicy-mode-syntax-table)
-  (modify-syntax-entry ?= "."   selinuxpolicy-mode-syntax-table)
-  (modify-syntax-entry ?~ "."   selinuxpolicy-mode-syntax-table)
-  (modify-syntax-entry ?* "."   selinuxpolicy-mode-syntax-table)
-  (modify-syntax-entry ?_ "w"   selinuxpolicy-mode-syntax-table)
-  (modify-syntax-entry ?. "_"   selinuxpolicy-mode-syntax-table)
+  (modify-syntax-entry ?#  "<"   selinuxpolicy-mode-syntax-table)
+  (modify-syntax-entry ?\n ">"   selinuxpolicy-mode-syntax-table)
+  (modify-syntax-entry ?{  "(}"  selinuxpolicy-mode-syntax-table)
+  (modify-syntax-entry ?}  "){"  selinuxpolicy-mode-syntax-table)
+  (modify-syntax-entry ?\( "()"  selinuxpolicy-mode-syntax-table)
+  (modify-syntax-entry ?\) ")("  selinuxpolicy-mode-syntax-table)
+  (modify-syntax-entry ?\; "."   selinuxpolicy-mode-syntax-table)
+  (modify-syntax-entry ?,  "."   selinuxpolicy-mode-syntax-table)
+  (modify-syntax-entry ?=  "."   selinuxpolicy-mode-syntax-table)
+  (modify-syntax-entry ?~  "."   selinuxpolicy-mode-syntax-table)
+  (modify-syntax-entry ?*  "."   selinuxpolicy-mode-syntax-table)
+  (modify-syntax-entry ?_  "w"   selinuxpolicy-mode-syntax-table)
+  (modify-syntax-entry ?.  "_"   selinuxpolicy-mode-syntax-table)
 )
 
 (define-derived-mode selinuxpolicy-mode fundamental-mode "SELinuxPolicy"
   "Major mode for editing SELinux TE-RBAC policies."
 
-  (kill-all-local-variables)
+  :syntax-table selinuxpolicy-mode-syntax-table
+  (setq-local font-lock-defaults selinuxpolicy-font-lock-defaults)
 
-  (set-syntax-table selinuxpolicy-mode-syntax-table)
-  (make-local-variable 'comment-start)
-  (setq comment-start "#")
-  (make-local-variable 'comment-start-skip)
-  (setq comment-start-skip "#")
-  (make-local-variable 'comment-end)
-  (setq comment-end "")
 
-  ;; Font-lock stuff
-  (make-local-variable 'font-lock-defaults)
-  (setq font-lock-defaults selinuxpolicy-font-lock-defaults)
-  )
+  (setq-local comment-start "#")
+  (setq-local comment-start-skip "#")
+  (setq-local comment-end ""))
 
 (defvar selinuxpolicy-font-lock-defaults
   `(selinuxpolicy-font-lock-keywords
@@ -114,5 +107,8 @@
    )
   "Fontification for SELinux TE-RBAC policy code.")
 
-(setq auto-mode-alist (cons '("\\.te$" . selinuxpolicy-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.te\\'" . selinuxpolicy-mode))
+
 (provide 'selinuxpolicy-mode)
+
+;;; selinux-policy.el ends here
