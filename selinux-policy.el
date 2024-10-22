@@ -56,6 +56,8 @@
     nil
     ))
 
+;; Naive syntax definition - to update:
+
 (defconst selinuxpolicy-font-lock-keywords '(
    ;; User Statements
    "\\<user\\>"
@@ -83,7 +85,8 @@
    "\\<dontaudit\\>"
    "\\<auditallow\\>"
    "\\<neverallow\\>"
-
+   ;;
+   ;;
    "\\<types\\>"
    "\\<self\\>"
    "\\<alias\\>"
@@ -113,9 +116,29 @@
    "\\<portcon\\>"
    "\\<netifcon\\>"
    "\\<nodecon\\>"
-   ("\\<\\w+?_t\\>" 0 font-lock-type-face keep t)
-   ("\\<\\w+?_u\\>" 0 font-lock-constant-face keep t)
-   ("\\<\\w+?_r\\>" 0 font-lock-builtin-face keep t)
+   ;;
+   ("\\<\\w+?_[tur]\\>" 0 font-lock-type-face keep t)
+   ;;
+   ;; flow control macros
+   ("\\<\\ifdef\\>"  0 font-lock-constant-face keep t)
+   ("\\<\\ifndef\\>" 0 font-lock-constant-face keep t)
+   ("\\<\\define\\>" 0 font-lock-constant-face keep t)
+   ;;
+   ;; macros
+   ("\\<policy_module\\>"   0 font-lock-builtin-face keep t)
+   ("\\<gen_require\\>"     0 font-lock-builtin-face keep t)
+   ("\\<optional_policy\\>" 0 font-lock-builtin-face keep t)
+   ("\\<gen_tunable\\>"     0 font-lock-builtin-face keep t)
+   ("\\<tunable_policy\\>"  0 font-lock-builtin-face keep t)
+   ("\\<interface\\>"       0 font-lock-builtin-face keep t)
+   ("\\<template\\>"        0 font-lock-builtin-face keep t)
+   ("\\<gen_context\\>"     0 font-lock-builtin-face keep t)
+   ("\\<gen_user\\>"        0 font-lock-builtin-face keep t)
+   ("\\<gen_bool\\>"        0 font-lock-builtin-face keep t)
+   ("\\<gen_cats\\>"        0 font-lock-builtin-face keep t)
+   ("\\<gen_sens\\>"        0 font-lock-builtin-face keep t)
+   ("\\<gen_levels\\>"      0 font-lock-builtin-face keep t)
+   ;;
    ;; ("\\<\\(\\w+?\\)\\>\\s-*(" 1 font-lock-warning-face keep t)
    ("\\s." 0 font-lock-string-face keep t))
   "Fontification for SELinux TE-RBAC policy code.")
