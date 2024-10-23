@@ -36,15 +36,6 @@
   (modify-syntax-entry ?.  "_"   selinuxpolicy-mode-syntax-table)
 )
 
-(define-derived-mode selinuxpolicy-mode fundamental-mode "SELinuxPolicy"
-  "Major mode for editing SELinux TE-RBAC policies."
-
-  :syntax-table selinuxpolicy-mode-syntax-table
-  (setq-local font-lock-defaults selinuxpolicy-font-lock-defaults)
-
-  (setq-local comment-start "#")
-  (setq-local comment-start-skip "#")
-  (setq-local comment-end ""))
 
 (defvar selinuxpolicy-font-lock-defaults
   `(selinuxpolicy-font-lock-keywords
@@ -123,6 +114,8 @@
    ("\\<\\ifdef\\>"  0 font-lock-constant-face keep t)
    ("\\<\\ifndef\\>" 0 font-lock-constant-face keep t)
    ("\\<\\define\\>" 0 font-lock-constant-face keep t)
+   ("\\<\\require\\>" 0 font-lock-constant-face keep t)
+   ("\\<\\module\\>" 0 font-lock-constant-face keep t)
    ;;
    ;; macros
    ("\\<policy_module\\>"   0 font-lock-builtin-face keep t)
@@ -142,6 +135,20 @@
    ;; ("\\<\\(\\w+?\\)\\>\\s-*(" 1 font-lock-warning-face keep t)
    ("\\s." 0 font-lock-string-face keep t))
   "Fontification for SELinux TE-RBAC policy code.")
+
+;; Derive from c-mode to get parenthesis matching and indentation.
+;;  - this is experimental
+;;
+(define-derived-mode selinuxpolicy-mode c-mode "SELinuxPolicy"
+  "Major mode for editing SELinux TE-RBAC policies."
+
+  :syntax-table selinuxpolicy-mode-syntax-table
+  (setq-local font-lock-defaults selinuxpolicy-font-lock-defaults)
+
+  (setq-local comment-start "#")
+  (setq-local comment-start-skip "#")
+  (setq-local comment-end ""))
+
 
 (add-to-list 'auto-mode-alist '("\\.te\\'" . selinuxpolicy-mode))
 
