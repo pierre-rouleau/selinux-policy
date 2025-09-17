@@ -150,7 +150,11 @@
   (setq-local comment-end ""))
 
 
-(add-to-list 'auto-mode-alist '("\\.te\\'" . selinuxpolicy-mode))
+;; .te : type enforcement files
+;; .if : interface files
+;; .fc : file context
+;; .spt: scripts
+(add-to-list 'auto-mode-alist '("\\.\\(if\\|fc\\|te\\|spt\\)\\'" . selinuxpolicy-mode))
 
 (provide 'selinuxpolicy-mode)
 
